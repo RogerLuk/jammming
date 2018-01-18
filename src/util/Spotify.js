@@ -4,7 +4,7 @@ const spotifyURL = `https://accounts.spotify.com/authorize?client_id=${clientId}
 let accessToken = undefined;
 let expiresIn = undefined;
 
-const headers = {Authorization: `Bearer ${accessToken}`};
+
 
 const Spotify = {
   getAccessToken(){
@@ -26,6 +26,7 @@ const Spotify = {
 
   search(term){
     const searchURL = `https://api.spotify.com/v1/search?type=track&q=${term.replace(' ', '%20')}`;
+    const accessToken = Spotify.getAccessToken();
 
     return fetch(searchURL, {
       headers: {Authorization: `Bearer ${accessToken}`}
@@ -50,12 +51,12 @@ const Spotify = {
     if(!playlistName || !trackURIs || trackURIs.length === 0){
       return;
     }
-
     const accessToken = Spotify.getAccessToken();
-    const userIdUrl = 'https://api.spotify.com/v1/me';
+    const headers = {Authorization: `Bearer ${accessToken}`};
+
     let userId = undefined;
     let playlistId = undefined;
-    fetch(userIdUrl, {headers:headers})
+    fetch('https://api.spotify.com/v1/me', {headers:headers})
     .then(response => response.json())
     .then(jsonResponse => userId = jsonResponse.id)
     .then(() => {
