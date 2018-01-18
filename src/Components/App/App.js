@@ -6,6 +6,8 @@ import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
 
+Spotify.getAccessToken();
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -23,7 +25,7 @@ class App extends Component {
   }
 
   addTrack(track){
-    if(!this.state.playlistTracks.find(cTrack => cTrack.id === track.id)){
+    if(!this.state.playlistTracks.find(ctrack => ctrack.id === track.id)){
       this.setState({
         playlistTracks: this.state.playlistTracks.push(track)
       });
@@ -50,10 +52,10 @@ class App extends Component {
   }
 
   search(term){
-    let results = Spotify.search(term);
-    this.setState({
-      searchResults: results
-    });
+    Spotify.search(term)
+    .then(searchResult => this.setState({
+      searchResults: searchResult
+    }));
   }
 
   render() {
