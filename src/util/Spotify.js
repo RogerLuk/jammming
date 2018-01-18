@@ -28,9 +28,7 @@ const Spotify = {
     return fetch(searchURL, {
       headers: {Authorization: `Bearer ${accessToken}`}
     }).then(function(response){
-      if(response.ok){
         return response.json();
-      }
     }).then(function(jsonresponse){
       if(!jsonresponse.tracks){
         return [];
