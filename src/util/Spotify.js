@@ -4,6 +4,8 @@ const spotifyURL = `https://accounts.spotify.com/authorize?client_id=${clientId}
 let accessToken = undefined;
 let expiresIn = undefined;
 
+const headers = {Authorization: `Bearer ${accessToken}`};
+
 const Spotify = {
   getAccessToken(){
     if(accessToken){
@@ -49,7 +51,7 @@ const Spotify = {
       return;
     }
 
-    const headers = {Authorization: `Bearer ${accessToken}`};
+    Spotify.getAccessToken();
     const userIdUrl = 'https://api.spotify.com/v1/me';
     let userId = undefined;
     let playlistId = undefined;

@@ -26,8 +26,9 @@ class App extends Component {
 
   addTrack(track){
     if(!this.state.playlistTracks.find(ctrack => ctrack.id === track.id)){
+      let tempList = this.state.playlistTracks.concat(track);
       this.setState({
-        playlistTracks: this.state.playlistTracks.push(track)
+        playlistTracks: tempList
       });
     }
   }
