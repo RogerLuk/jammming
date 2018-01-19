@@ -6,13 +6,14 @@ import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
 
+Spotify.getAccessToken();
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       searchResults: [],
-      playlistName: 'My playlist',
+      playlistName: 'My Playlist',
       playlistTracks: []
     };
 
@@ -39,14 +40,15 @@ class App extends Component {
   }
 
   updatePlaylistName(name){
-    this.setState({playListName: name});
+    this.setState({playlistName: name});
   }
 
   savePlaylist(){
     const trackURIs = this.state.playlistTracks.map(track => track.url);
-    Spotify.savePlaylist(this.state.playListName, trackURIs);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs);
     this.setState({
-      searchResults: []
+      searchResults: [],
+      playlistTracks: []
     });
     this.updatePlaylistName('New Playlist');
     console.log('new playList name');
@@ -70,7 +72,7 @@ class App extends Component {
             {console.log('Playlist track:')}
             {console.log(this.state.playlistTracks)}
             {console.log('End.')}
-            <Playlist playlistName={this.state.playListName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
           </div>
         </div>
       </div>
