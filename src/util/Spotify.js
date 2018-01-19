@@ -56,12 +56,12 @@ const Spotify = {
 
     let userId = undefined;
     let playlistId = undefined;
-    fetch('https://api.spotify.com/v1/me', {headers:headers})
+    return fetch('https://api.spotify.com/v1/me', {headers:headers})
     .then(response => response.json())
     .then(jsonResponse => userId = jsonResponse.id)
     .then(() => {
       const PlaylistUrl = `https://api.spotify.com/v1/users/${userId}/playlists`;
-      fetch(PlaylistUrl, {
+      return fetch(PlaylistUrl, {
           method: 'POST',
           headers: headers,
           body: JSON.stringify({name: playlistName})
@@ -70,7 +70,7 @@ const Spotify = {
       .then(jsonResponse => playlistId = jsonResponse.id)
       .then(() => {
           const addPlaylistUrl = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`;
-          fetch(addPlaylistUrl, {
+          return fetch(addPlaylistUrl, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({
